@@ -5,7 +5,7 @@ interface Props {
 }
 
 const ActivitiesPage: React.FC<Props> = ({ propName }) => {
-  return <div>activities</div>
+  return <div className='block m-0'>activities</div>
 }
 
 export default ActivitiesPage
