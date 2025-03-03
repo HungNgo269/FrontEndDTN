@@ -6,7 +6,7 @@ interface Props {
 
 const Banner: React.FC<Props> = ({ propName }) => {
   return (
-    <div className='relative h-[90vh] text-white'>
+    <div className='relative h-screen text-white'>
       {/* Background Image with Gradient Overlay */}
       <div className='absolute inset-0 z-0'>
         <img src={banner} alt='Banner' className='w-full h-full object-cover' />
@@ -23,7 +23,7 @@ const Banner: React.FC<Props> = ({ propName }) => {
               Cổng thông tin phục vụ cộng đồng của Trung tâm Dịch vụ Sinh viên, trường Đại học Bách khoa Đà Nẵng.
             </p>
 
-            {/* Action Buttons */}
+            {/* Action Buttons 
             <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
               <button className='flex items-center bg-white  font-bold px-8 py-2 rounded-md hover:bg-opacity-80 transition-all'>
                 <span className='text-center w-full text-black '>Hoạt động</span>
@@ -31,7 +31,7 @@ const Banner: React.FC<Props> = ({ propName }) => {
               <button className='flex items-center  bg-white  font-bold bg-opacity-70 px-8 py-2 rounded-md hover:bg-opacity-40 transition-all'>
                 <span className='text-center w-full text-black'>Sinh viên 5 tốt</span>
               </button>
-            </div>
+            </div>*/}
           </div>
         </div>
       </div>

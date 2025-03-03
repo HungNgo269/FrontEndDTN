@@ -1,25 +1,22 @@
-import { useEffect, useState } from 'react'
+import React from 'react'
 import CounterCard from './CounterCard'
-import TestApi from '~/api/TestApi'
-import { Item } from '~/model/Item'
+import traditionalIcon from '~/assets/images/non-svg/icon_lcd.jpg'
+import academicIcon from '~/assets/images/non-svg/icon_lcd.jpg'
+import lcdIcon from '~/assets/images/non-svg/icon_lcd.jpg'
+import otherIcon from '~/assets/images/non-svg/icon_lcd.jpg'
 
-const Counter: React.FC<Item> = ({ propName }) => {
-  const [data, setData] = useState<Item[] | null>(null)
-  useEffect(() => {
-    const getData = async (type: string) => {
-      const res = await TestApi.GetData(type)
-      setData(res)
-    }
-    getData('jewelery')
-  }, [])
+interface Props {
+  propName?: string
+}
 
+const Counter: React.FC<Props> = ({ propName }) => {
   return (
-    <div
-      className=' px-4 md:px-16 lg:px-24 m-auto md:w-3/4 lg:w-3/4 z-10 bottom-15
-     relative'
-    >
-      <div className='flex flex-row items-start shadow h-fit bg-white  rounded-[64.8px] justify-around gap-6'>
-        {data?.map((item) => <CounterCard key={item.id} data={item} />)}
+    <div className='px-4 md:px-16 lg:px-24 m-auto md:w-4/5 lg:w-4/5 sm:w-full z-10 relative bottom-15'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 shadow h-fit bg-white rounded-[64.8px] px-2 '>
+        <CounterCard image={traditionalIcon} description='Hoạt động truyền thống' />
+        <CounterCard image={academicIcon} description='Hoạt động học thuật' />
+        <CounterCard image={lcdIcon} description='Hoạt động liên chi đoàn' />
+        <CounterCard image={otherIcon} description='Hoạt động khác' />
       </div>
     </div>
   )
