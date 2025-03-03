@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import bigLogo from '~/assets/images/non-svg/logo.png'
 import smallLogo from '~/assets/images/svg/smallLogo.svg.png'
-import Avatar from '../common/Avatar'
+import AvatarDropdown from '~/components/common/AvatarDropDown'
 
 interface Props {
   title?: string
@@ -113,7 +113,7 @@ const Header: React.FC<Props> = ({ title = 'Main Article Title' }) => {
 
             {/* Avatar */}
             <div className='relative'>
-              <Avatar></Avatar>
+              <AvatarDropdown></AvatarDropdown>
             </div>
           </div>
         </div>
