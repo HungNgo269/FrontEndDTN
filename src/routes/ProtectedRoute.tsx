@@ -1,13 +1,14 @@
-// import React from 'react'
+import React from 'react'
+import { Navigate, Outlet } from 'react-router-dom'
 
-// interface Props {
-//   propName?: string
-// }
+interface Props {
+  propName?: string
+}
 
-// const PrivateRoute: React.FC<Props> = ({ children, ...rest }) => {
-//   let auth = { token: true }
+const PrivateRoute: React.FC<Props> = ({ children, ...rest }) => {
+  const accessToken = localStorage.getItem('accessToken')
 
-//   return auth.token ? <Outlet /> : <Navigate to='/login' />
-// }
+  return accessToken ? <Outlet /> : <Navigate to='/login' />
+}
 
-// export default PrivateRoute
+export default PrivateRoute
