@@ -12,7 +12,6 @@ const Header: React.FC<Props> = ({ title = 'Main Article Title' }) => {
   const [logo, setLogo] = useState(bigLogo)
   const [isScrolled, setIsScrolled] = useState(false)
 
-  // Handle logo switching based on screen size
   useEffect(() => {
     const handleResize = () => {
       setLogo(window.innerWidth <= 768 ? smallLogo : bigLogo)
@@ -22,7 +21,6 @@ const Header: React.FC<Props> = ({ title = 'Main Article Title' }) => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Handle scroll behavior
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY >= 100)
@@ -43,7 +41,6 @@ const Header: React.FC<Props> = ({ title = 'Main Article Title' }) => {
     >
       <nav className='mx-auto px-4 sm:px-6 lg:px-24 md:px-16 text-inherit'>
         <div className='flex items-center justify-between h-16 text-inherit'>
-          {/* Left Section - Logo */}
           <div className='flex-shrink-0 sticky w-1/4'>
             <Link to='/' onClick={scrollToTop} className='flex items-center'>
               <div className={window.innerWidth <= 768 ? 'max-h-16 max-w-16' : ''}>
@@ -52,7 +49,6 @@ const Header: React.FC<Props> = ({ title = 'Main Article Title' }) => {
             </Link>
           </div>
 
-          {/* Middle Section - Navigation Links */}
           <div className='hidden md:flex items-center justify-center space-x-8 w-1/2 gap-6'>
             <Link
               to='/'
@@ -70,19 +66,9 @@ const Header: React.FC<Props> = ({ title = 'Main Article Title' }) => {
             >
               Hoạt động
             </Link>
-            <Link
-              to='/'
-              className={`transition-all duration-300 font-bold  rounded-lg  text-nowrap ${
-                isScrolled ? 'text-blue-900  hover:text-[var(--primary)]' : 'text-white hover:text-blue-900'
-              }`}
-            >
-              Sinh viên 5 tốt
-            </Link>
           </div>
 
-          {/* Right Section - Search Bar + Avatar */}
           <div className='flex items-center space-x-4 justify-end w-1/4'>
-            {/* Search Bar */}
             <div className='relative  lg:block sm:hidden md:hidden'>
               <input
                 type='text'
@@ -111,7 +97,6 @@ const Header: React.FC<Props> = ({ title = 'Main Article Title' }) => {
               </button>
             </div>
 
-            {/* Avatar */}
             <div className='relative'>
               <AvatarDropdown></AvatarDropdown>
             </div>

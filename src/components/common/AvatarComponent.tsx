@@ -4,11 +4,20 @@ import Avatar from '@mui/material/Avatar'
 interface AvatarProps {
   alt?: string
   src?: string
-  onClick?: MouseEventHandler
+  onMouseEnter?: MouseEventHandler
+  onMouseLeave?: MouseEventHandler
 }
 
-const AvatarComponent: React.FC<AvatarProps> = ({ onClick, src = '' }) => {
-  return <Avatar alt='avatar' src={src} onClick={onClick} className='w-10 h-10 cursor-pointer' />
+const AvatarComponent: React.FC<AvatarProps> = ({ onMouseEnter, onMouseLeave, src = '' }) => {
+  return (
+    <Avatar
+      alt='avatar'
+      src={src}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className='w-10 h-10 cursor-pointer'
+    />
+  )
 }
 
 export default AvatarComponent

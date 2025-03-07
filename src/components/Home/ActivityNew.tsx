@@ -1,14 +1,13 @@
-import React from 'react'
 import _ from 'lodash'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import ArrowCircleLeftIcon from '~/assets/images/svg/left_arrow_circle.svg'
-import ArrowCircleRightIcon from '~/assets/images/svg/right_arrow_circle.svg'
+import ArrowCircleLeftIcon from '~/assets/images/svg/left_arrow.svg'
+import ArrowCircleRightIcon from '~/assets/images/svg/right_arrow.svg'
 import ActivityCard from './ActivityCard'
 
 const slides = [
-  'https://volunteer.hcmute.edu.vn/uploads/images/1655261114-845ee9db.jpg',
+  'https://hust.edu.vn/uploads/sys/banners/cover1.png',
   'https://volunteer.hcmute.edu.vn/assets/images/spkt02.png',
   'https://volunteer.hcmute.edu.vn/uploads/images/1654834340-cf3a3.jpg',
   'https://volunteer.hcmute.edu.vn/uploads/images/1655261114-845ee9db.jpg',
@@ -30,7 +29,7 @@ const PrevArrow = ({ onClick }) => (
 
 const NextArrow = ({ onClick }) => (
   <div
-    className='absolute right-[-1rem] sm:right-[-2rem] md:right-[-3rem] top-1/2 transform -translate-y-1/2 cursor-pointer z-10'
+    className='absolute right-[-1rem] sm:right-[-2rem] md:right-[-3rem] top-1/2 transform -translate-y-1/2 cursor-pointer z-10 '
     onClick={onClick}
   >
     <img src={ArrowCircleRightIcon} className='hidden sm:block w-8 md:w-10 lg:w-12' alt='Next' />
@@ -78,11 +77,14 @@ const ActivityNew = () => {
   }
 
   return (
-    <div className='relative z-10 flex flex-col justify-center items-center h-full px-2 sm:px-4 md:px-16 lg:px-24 md:py-4 lg:py-4 mx-auto'>
+    <div
+      className='relative z-10 flex flex-col justify-center items-center 
+    h-full p-4 mx-auto pb-20'
+    >
       <span className='mb-8 text-center text-xl sm:text-2xl md:text-3xl font-bold text-blue-900'>
-        CÁC HOẠT ĐỘNG MỚI
+        CÁC HOẠT ĐỘNG ĐÁNG CHÚ Ý
       </span>
-      <div className='flex flex-row justify-center items-center w-full sm:w-4/5 md:w-4/5 lg:w-4/5'>
+      <div className='flex flex-row justify-center items-center w-full sm:w-4/5 md:w-3/5 lg:w-3/5'>
         <Slider className='w-full' {...settings}>
           {_.map(slides, (slide, index) => (
             <div key={index} className='px-2'>

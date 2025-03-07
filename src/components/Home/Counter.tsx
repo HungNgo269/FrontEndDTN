@@ -1,7 +1,7 @@
 import React from 'react'
 import CounterCard from './CounterCard'
 import traditionalIcon from '~/assets/images/non-svg/icon_lcd.jpg'
-import academicIcon from '~/assets/images/non-svg/icon_lcd.jpg'
+import academicIcon from '~/assets/images/svg/study_icon.svg'
 import lcdIcon from '~/assets/images/non-svg/icon_lcd.jpg'
 import otherIcon from '~/assets/images/non-svg/icon_lcd.jpg'
 

@@ -1,8 +1,8 @@
 import React from 'react'
-import ActivityTab from '~/components/Home/ActivityTab'
 import Banner from '~/components/Home/Banner'
 import Counter from '~/components/Home/Counter'
 import ActivityNew from '~/components/Home/ActivityNew'
+import ActivityTab from '~/components/Home/ActivityTab'
 
 interface Props {
   propName?: string

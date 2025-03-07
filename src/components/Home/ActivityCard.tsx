@@ -3,15 +3,32 @@ import CardHeader from '@mui/material/CardHeader'
 import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
-import { Avatar } from '@mui/material'
+import { Avatar, Button, CardActions } from '@mui/material'
+import Event from '~/model/Event/Event'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import { styled } from '@mui/material/styles'
+import { useNavigate } from 'react-router-dom'
 
-export default function ActivityCard({ CardImage }) {
+interface CardProps {
+  CardInfo: Event
+}
+const CardHeaderNoPadding = styled(CardHeader)(`
+  padding-bottom: 0;
+  &:last-child {
+    padding-bottom: 0;
+  }
+`)
+
+const ActivityCard: React.FC<CardProps> = ({ CardInfo }) => {
+  const imageUrl = `http://localhost:8080/images/${CardInfo?.eventImage[0].imageUrl}`
+  console.log(CardInfo)
+  const navigate = useNavigate()
+
   return (
-    <div className='flex flex-col justify-center items-center h-full sm:p-1 md:p-2 lg:p-4 mx-4'>
+    <div className='flex flex-col justify-center items-center h-full sm:p-1 md:p-2 lg:p-2 xl:p-4 2xl:p-8  '>
       <Card
-        className=' lg:w-[21rem] lg:h-[31rem] cursor-pointer'
+        className='w-full h-full'
         sx={{
-          borderRadius: '20px',
           boxShadow: 3,
           transition: 'transform 0.2s, box-shadow 0.2s',
           '&:hover': {
@@ -22,32 +39,87 @@ export default function ActivityCard({ CardImage }) {
       >
         <CardMedia
           component='img'
-          image={CardImage}
+          image={imageUrl || null}
           alt='Activity'
           className='cursor-pointer'
           sx={{
+            height: '45%',
             aspectRatio: '3/2',
-            objectFit: 'cover',
-            borderTopLeftRadius: '20px',
-            borderTopRightRadius: '20px'
+            objectFit: 'cover'
           }}
-        />
-        <CardHeader
-          avatar={
-            <Avatar className='bg-amber-900' aria-label='recipe'>
-              R
-            </Avatar>
+          onClick={() =>
+            navigate(`/activity/${CardInfo.id}`, {
+              state: {
+                id: CardInfo.id
+              }
+            })
           }
-          title='Tên hoạt động'
-          className='text-blue-900 hover:text-blue-900 cursor-pointer'
-          titleTypographyProps={{ variant: 'h6', fontWeight: 'bold' }}
         />
-        <CardContent className='border-b border-gray-100 w-full h-2/7'>
-          <Typography variant='body2' className='text-blue-900'>
-            Nội dung hoạt động
-          </Typography>
-        </CardContent>
+        <div className='flex justify-between flex-col h-[55%] '>
+          <CardHeaderNoPadding
+            onClick={() => navigate(`/activity/${CardInfo.id}`)}
+            avatar={
+              <Avatar className='bg-amber-900' aria-label='recipe' sx={{ padding: '0px' }}>
+                R
+              </Avatar>
+            }
+            title={CardInfo?.name}
+            sx={{
+              '& .MuiCardHeader-title': {
+                lineClamp: 2,
+                WebkitLineClamp: 2,
+                display: '-webkit-box',
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+                fontSize: '1rem',
+                color: '#1c398e',
+                '&:hover': { color: '#0a67af' },
+                cursor: 'pointer',
+                fontWeight: 'bold'
+              }
+            }}
+          />
+
+          <CardContent className=' w-full '>
+            <div className='lg:pb-8 md:pb-4 sm:pb-1 border-b border-gray-100'>
+              <Typography variant='body2' className='text-blue-900  line-clamp-3 '>
+                {CardInfo?.description}
+              </Typography>
+            </div>
+
+            <div className='flex flex-row justify-between items-center  mr-auto'>
+              <div className='flex flex-row justify-items-start items-center  mr-auto'>
+                <AccessTimeIcon></AccessTimeIcon>
+                <Typography
+                  variant='body2'
+                  className='text-gray-500 line-clamp-2 text-sm
+'
+                >
+                  {CardInfo?.date}
+                </Typography>
+              </div>
+              <CardActions>
+                <Button
+                  onClick={() => navigate(`/activity/${CardInfo.id}`)}
+                  variant='outlined'
+                  sx={{
+                    backgroundColor: '#1c398e',
+                    color: 'white',
+                    borderRadius: '8px',
+                    '&:hover': {
+                      backgroundColor: '#0a67af'
+                    }
+                  }}
+                  size='small'
+                >
+                  Chi tiết
+                </Button>
+              </CardActions>
+            </div>
+          </CardContent>
+        </div>
       </Card>
     </div>
   )
 }
+export default ActivityCard

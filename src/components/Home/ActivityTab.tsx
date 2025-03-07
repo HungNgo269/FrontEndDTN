@@ -1,76 +1,76 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import _ from 'lodash'
 import ActivityCard from './ActivityCard'
+import { Tab, Tabs } from '@mui/material'
+import EventApi from '~/api/EventApi'
+import { EventsResponse } from '~/model/Event/EventRespone'
 
-interface Props {
-  propName?: string
-}
-const slides = Array.from(
-  { length: 100 },
-  () => `https://picsum.photos/${384}/${576}?random=${Math.floor(Math.random() * 1000)}`
-)
+import PaginationComponent from '../common/PaginationComponent'
 
-const ActivityTab: React.FC<Props> = ({ propName }) => {
-  const itemsPerPage = 12
-  const totalPages = Math.ceil(slides.length / itemsPerPage)
+const ActivityTab = () => {
+  const [eventsData, setEventsData] = useState<EventsResponse>({
+    events: [],
+    totalPage: 0
+  })
+
   const [currentPage, setCurrentPage] = useState(1)
+  const [limit] = useState(12)
+  const [value, setValue] = useState('one')
 
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const currentSlides = slides.slice(startIndex, startIndex + itemsPerPage)
+  useEffect(() => {
+    const getEvents = async (page: number, limit: number) => {
+      try {
+        const result = await EventApi.getEvents(page, limit)
+        setEventsData(result)
+      } catch (error) {
+        console.error('Error fetching events:', error)
+      }
+    }
+    getEvents(currentPage, limit)
+  }, [currentPage, limit])
+  console.log(eventsData)
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue)
+  }
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+  }
 
   return (
-    <div className='relative z-10 flex flex-col justify-center items-center h-full px-4 md:px-16 lg:px-24 m-auto lg:mb-10 md:mb-6 sm:mb-2'>
+    <div
+      className='relative z-10 flex flex-col justify-center items-center h-full 
+      px-4 md:px-16 lg:px-24 m-auto lg:mb-10 md:mb-6 sm:mb-2 pt-20'
+    >
       <h1 className='text-2xl font-bold m-8 text-blue-900'>CÁC HOẠT ĐỘNG</h1>
       <span className='mb-4 text-center md:text-sm sm:text-xs lg:text-base w-3/4 hidden md:block'>
         Trang web cung cấp thông tin về các hoạt động của trường, từ sự kiện truyền thống, học thuật đến hoạt động liên
         chi đoàn và ngoại khóa. Sinh viên có thể tham gia lễ hội, hội thảo, nghiên cứu khoa học, tình nguyện, thể thao
         và nhiều hoạt động bổ ích khác.
       </span>
-
       <span className='mb-4 text-center md:text-sm sm:text-xs lg:text-base w-3/4 block md:hidden'>
         Trang web cung cấp thông tin về các hoạt động của trường, từ sự kiện truyền thống, học thuật đến hoạt động liên
         chi đoàn và ngoại khóa.
       </span>
-      {/* Grid layout for ActivityCards */}
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:w-4/5 md:w-4/5 sm:w-full'>
-        {_.map(currentSlides, (slide, index) => (
-          <ActivityCard key={startIndex + index} CardImage={slide} />
+      <Tabs value={value} onChange={handleChange} aria-label='secondary tabs example'>
+        <Tab value='one' label='Hoạt động truyền thống' />
+        <Tab value='two' label='Hoạt động học thuật' />
+        <Tab value='three' label='Hoạt động liên chi đoàn' />
+        <Tab value='four' label='Hoạt động khác' />
+      </Tabs>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:w-4/5 md:w-[5/7] lg:w-[5/7]'>
+        {_.map(eventsData.events, (event) => (
+          <>
+            <ActivityCard key={event.id} CardInfo={event} />
+          </>
         ))}
       </div>
 
-      {/* Pagination Controls */}
-      <div className='flex flex-wrap justify-center lg:my-16 md:mt-10 md:mb-10 sm:mt-6 sm:mb-6'>
-        {/* Previous Button */}
-        <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-          className='mx-1 px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed'
-        >
-          Prev
-        </button>
-
-        {/* Page Number Buttons */}
-        {Array.from({ length: totalPages }, (_, i) => (
-          <button
-            key={i}
-            className={`mx-1 px-3 py-1 rounded ${
-              currentPage === i + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'
-            }`}
-            onClick={() => setCurrentPage(i + 1)}
-          >
-            {i + 1}
-          </button>
-        ))}
-
-        {/* Next Button */}
-        <button
-          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-          disabled={currentPage === totalPages}
-          className='mx-1 px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed'
-        >
-          Next
-        </button>
-      </div>
+      <PaginationComponent
+        currentPage={currentPage}
+        totalPages={eventsData.totalPage}
+        onPageChange={handlePageChange}
+      />
     </div>
   )
 }
