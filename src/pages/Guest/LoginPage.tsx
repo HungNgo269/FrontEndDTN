@@ -2,10 +2,11 @@ import React from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import loginSchema from '~/schema/loginSchema'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { login } from '~/features/auth/authActions'
+import { setUser } from '~/features/user/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '~/store/store'
+import store, { AppDispatch, RootState } from '~/store/store'
 interface LoginFormValues {
   username: string
   password: string
@@ -14,14 +15,42 @@ interface LoginFormValues {
 const LoginPage: React.FC = () => {
   const { loading, error, success } = useSelector((state: RootState) => state.auth)
   const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<LoginFormValues>({ resolver: yupResolver(loginSchema) })
   const onSubmit = async (data: { username: string; password: string }) => {
-    dispatch(login(data))
+    try {
+      const loginResults = await dispatch(login(data))
+      if (login.fulfilled.match(loginResults)) {
+        const user = loginResults.payload.userResponse
+        if (user) {
+          dispatch(
+            setUser({
+              id: user.id,
+              fullname: user.fullname,
+              phoneNumber: user.phoneNumber, //number ?
+              studentId: user.studentId,
+              address: user.address,
+              email: user.email,
+              dateOfBirth: user.dateOfBirth,
+              username: user.username,
+              active: true
+            })
+          )
+        }
+      }
+      //toast
+      console.log('Đăng nhập thành công')
+      navigate('/')
+    } catch (error) {
+      //toast show loi
+      console.log('error while login', error)
+    }
   }
+  console.log('usset', store.getState().user)
   return (
     <div className='bg-white min-h-screen flex flex-col justify-center items-center p-4'>
       <div className='w-full max-w-md bg-white shadow-lg rounded-lg p-6'>
@@ -57,7 +86,11 @@ const LoginPage: React.FC = () => {
               Quên mật khẩu?
             </Link>
           </div>
-          <button type='submit' className='w-full bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded'>
+          <button
+            type='submit'
+            className='w-full bg-blue-900 hover:bg-blue-800 text-white 
+          font-bold py-2 px-4 rounded cursor-pointer'
+          >
             Đăng nhập
           </button>
         </form>

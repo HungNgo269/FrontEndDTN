@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import ClientApi from '~/api/ClientApi'
+import { User } from '~/model/User/User'
 interface LoginPayload {
   username: string
   password: string
@@ -8,8 +9,7 @@ interface LoginPayload {
 interface LoginResponse {
   accessToken: string | null
   role: string
-  // userInfo: object
-  // token: string
+  userResponse: User
 }
 export const login = createAsyncThunk<LoginResponse, LoginPayload, { rejectValue: string }>(
   'auth/login',
@@ -19,9 +19,8 @@ export const login = createAsyncThunk<LoginResponse, LoginPayload, { rejectValue
         username,
         password
       })
-      console.log('respone dn >>>', response)
       localStorage.setItem('accessToken', response.data.accessToken)
-
+      console.log('response', response.data)
       return response.data
     } catch (error: any) {
       return rejectWithValue(error.response?.data || error.message)

@@ -28,7 +28,6 @@ const ActivityTab = () => {
     }
     getEvents(currentPage, limit)
   }, [currentPage, limit])
-  console.log(eventsData)
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue)
   }

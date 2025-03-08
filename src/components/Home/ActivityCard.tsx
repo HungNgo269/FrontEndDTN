@@ -21,7 +21,6 @@ const CardHeaderNoPadding = styled(CardHeader)(`
 
 const ActivityCard: React.FC<CardProps> = ({ CardInfo }) => {
   const imageUrl = `http://localhost:8080/images/${CardInfo?.eventImage[0].imageUrl}`
-  console.log(CardInfo)
   const navigate = useNavigate()
 
   return (

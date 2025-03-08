@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import bigLogo from '~/assets/images/non-svg/logo.png'
 import smallLogo from '~/assets/images/svg/smallLogo.svg.png'
 import AvatarDropdown from '~/components/common/AvatarDropDown'
@@ -11,6 +11,7 @@ interface Props {
 const Header: React.FC<Props> = ({ title = 'Main Article Title' }) => {
   const [logo, setLogo] = useState(bigLogo)
   const [isScrolled, setIsScrolled] = useState(false)
+  const location = useLocation()
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,11 +33,12 @@ const Header: React.FC<Props> = ({ title = 'Main Article Title' }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
-
   return (
     <div
       className={`fixed top-0 left-0 w-full z-50 shadow-xl  text-gray-100 ${
-        isScrolled ? 'bg-white text-blue-900 transition-all duration-300 ease-in-out ' : 'backdrop-blur-sm'
+        isScrolled || location.pathname !== '/'
+          ? 'bg-white text-blue-900 transition-all duration-300 ease-in-out '
+          : 'backdrop-blur-sm'
       }`}
     >
       <nav className='mx-auto px-4 sm:px-6 lg:px-24 md:px-16 text-inherit'>
@@ -53,7 +55,9 @@ const Header: React.FC<Props> = ({ title = 'Main Article Title' }) => {
             <Link
               to='/'
               className={`transition-all duration-300 font-bold   rounded-lg  text-nowrap  ${
-                isScrolled ? 'text-blue-900  hover:text-[var(--primary)]' : 'text-white hover:text-blue-900'
+                isScrolled || location.pathname !== '/'
+                  ? 'text-blue-900  hover:text-[var(--primary)]'
+                  : 'text-white hover:text-blue-900'
               }`}
             >
               Giới thiệu
@@ -61,7 +65,9 @@ const Header: React.FC<Props> = ({ title = 'Main Article Title' }) => {
             <Link
               to='/activities'
               className={`transition-all duration-300 font-bold  rounded-lg   text-nowrap  ${
-                isScrolled ? 'text-blue-900  hover:text-[var(--primary)]' : 'text-white hover:text-blue-900'
+                isScrolled || location.pathname !== '/'
+                  ? 'text-blue-900  hover:text-[var(--primary)]'
+                  : 'text-white hover:text-blue-900'
               }`}
             >
               Hoạt động
