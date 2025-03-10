@@ -4,9 +4,11 @@ import ActivitiesPage from './pages/MainPage/ActivitiesPage'
 import DefaultLayout from './layouts/DefaultLayout'
 import ProtectedRoute from '~/routes/ProtectedRoute'
 import LoginPage from './pages/Guest/LoginPage'
-import DashboardPage from './pages/User/DashboardPage'
 import ScrollToTop from './components/common/ScrollToTop'
 import ActivityDes from './components/Home/ActivityDes'
+import Home from './pages/User/Home'
+import ActivityPoint from './pages/User/ActivityPoint'
+import NotiSetting from './pages/User/NotiSetting'
 function App() {
   return (
     <>
@@ -19,9 +21,11 @@ function App() {
             <Route path='/activities' element={<ActivitiesPage></ActivitiesPage>}></Route>
             <Route path='/activity/:id' element={<ActivityDes></ActivityDes>}></Route>
             <Route path='/login' element={<LoginPage></LoginPage>}></Route>
-          </Route>
-          <Route element={<ProtectedRoute />}>
-            <Route path='/dashboard' element={<DashboardPage />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path='/user/user-profile' element={<Home />} />
+              <Route path='/user/activity-point' element={<ActivityPoint />} />
+              <Route path='/user/noti-setting' element={<NotiSetting />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

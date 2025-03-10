@@ -73,11 +73,21 @@ const AvatarDropdown = () => {
                 <Typography variant='h6' component='h2'>
                   Username
                 </Typography>
-                <div className='w-full border-b-gray-300 border-b-[0.5px]'>
+                <Link to={'/user/user-profile'} className='w-full border-b-gray-300 border-b-[0.5px]'>
                   <Typography sx={{ mt: 2 }} className='text-blue-900'>
                     Thông tin cá nhân
                   </Typography>
-                </div>
+                </Link>
+                <Link to={'/user/activity-point'} className='w-full border-b-gray-300 border-b-[0.5px]'>
+                  <Typography sx={{ mt: 2 }} className='text-blue-900'>
+                    Phục vụ cộng đồng
+                  </Typography>
+                </Link>
+                <Link to={'/user/noti-setting'} className='w-full border-b-gray-300 border-b-[0.5px]'>
+                  <Typography sx={{ mt: 2 }} className='text-blue-900'>
+                    Cài đặt thông báo{' '}
+                  </Typography>
+                </Link>
                 <Typography sx={{ mt: 2 }} className='text-blue-900'>
                   <Link to='/login'>Đăng nhập</Link>
                 </Typography>
