@@ -13,7 +13,7 @@ const ActivityTab = () => {
     totalPage: 0
   })
 
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(0)
   const [limit] = useState(12)
   const [value, setValue] = useState('one')
 
@@ -55,7 +55,6 @@ const ActivityTab = () => {
         <Tab value='one' label='Hoạt động truyền thống' />
         <Tab value='two' label='Hoạt động học thuật' />
         <Tab value='three' label='Hoạt động liên chi đoàn' />
-        <Tab value='four' label='Hoạt động khác' />
       </Tabs>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:w-4/5 md:w-[5/7] lg:w-[5/7]'>
         {_.map(eventsData.events, (event) => (

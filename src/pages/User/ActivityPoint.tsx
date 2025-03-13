@@ -15,7 +15,9 @@ const ActivityPoint: React.FC<HomeProps> = ({ propName }) => {
   sm:max-w-full md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto'
       >
         <SideNav />
-        <MainContent title='Phục vụ cộng đồng' />
+        <MainContent title='Phục vụ cộng đồng' decs='Thông tin về điểm phục vụ cộng đồng và sinh viên 5 tốt'>
+          <div>s</div>
+        </MainContent>{' '}
       </div>
     </div>
   )
