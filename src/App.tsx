@@ -9,6 +9,8 @@ import ActivityDes from './components/Home/ActivityDes'
 import Home from './pages/User/Home'
 import ActivityPoint from './pages/User/ActivityPoint'
 import NotiSetting from './pages/User/NotiSetting'
+import CriteriaPage from './pages/MainPage/CriteriaPage'
+import UserActivity from './pages/User/UserActivity'
 function App() {
   return (
     <>
@@ -19,12 +21,14 @@ function App() {
           <Route element={<DefaultLayout />}>
             <Route path='/' element={<LandingPage></LandingPage>}></Route>
             <Route path='/activities' element={<ActivitiesPage></ActivitiesPage>}></Route>
+            <Route path='/criteria' element={<CriteriaPage></CriteriaPage>}></Route>
             <Route path='/activity/:id' element={<ActivityDes></ActivityDes>}></Route>
             <Route path='/login' element={<LoginPage></LoginPage>}></Route>
             <Route element={<ProtectedRoute />}>
               <Route path='/user/user-profile' element={<Home />} />
               <Route path='/user/activity-point' element={<ActivityPoint />} />
               <Route path='/user/noti-setting' element={<NotiSetting />} />
+              <Route path='/user/activity' element={<UserActivity />} />
             </Route>
           </Route>
         </Routes>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import store from '~/store/store'
+import { store } from '~/store/store'
 
 interface UpdateFormValues {
   phoneNumber: string
@@ -12,6 +12,7 @@ interface UpdateFormValues {
 const ProfileForm: React.FC = () => {
   const navigate = useNavigate()
   const user = store.getState().user
+  console.log(user)
   const {
     register,
     handleSubmit,
@@ -36,7 +37,7 @@ const ProfileForm: React.FC = () => {
           className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-900 focus:border-blue-900'
           required
           disabled
-          defaultValue={user?.fullname ?? 'Tên đầy đủ'}
+          defaultValue={user?.fullname}
         />
       </div>
       <div className='mb-4'>

@@ -5,18 +5,8 @@ import 'slick-carousel/slick/slick-theme.css'
 import ArrowCircleLeftIcon from '~/assets/images/svg/left_arrow.svg'
 import ArrowCircleRightIcon from '~/assets/images/svg/right_arrow.svg'
 import ActivityCard from './ActivityCard'
-
-const slides = [
-  'https://hust.edu.vn/uploads/sys/banners/cover1.png',
-  'https://volunteer.hcmute.edu.vn/assets/images/spkt02.png',
-  'https://volunteer.hcmute.edu.vn/uploads/images/1654834340-cf3a3.jpg',
-  'https://volunteer.hcmute.edu.vn/uploads/images/1655261114-845ee9db.jpg',
-  'https://volunteer.hcmute.edu.vn/assets/images/spkt02.png',
-  'https://volunteer.hcmute.edu.vn/uploads/images/1654834340-cf3a3.jpg',
-  'https://volunteer.hcmute.edu.vn/uploads/images/1655261114-845ee9db.jpg',
-  'https://volunteer.hcmute.edu.vn/assets/images/spkt02.png',
-  'https://volunteer.hcmute.edu.vn/uploads/images/1654834340-cf3a3.jpg'
-]
+import { useEffect, useState } from 'react'
+import EventApi from '~/api/EventApi'
 
 const PrevArrow = ({ onClick }) => (
   <div
@@ -37,13 +27,22 @@ const NextArrow = ({ onClick }) => (
 )
 
 const ActivityNew = () => {
+  const [data, setData] = useState([])
+  useEffect(() => {
+    const getData = async () => {
+      const result = await EventApi.getEvents(0, 6)
+      setData(result.events)
+      console.log(result)
+    }
+    getData()
+  }, [])
   const settings = {
     infinite: true,
-    speed: 500,
+    speed: 600,
     slidesToShow: 3,
-    slidesToScroll: 3,
     initialSlide: 0,
-    centerMode: true,
+    centerMode: false,
+    swipToSlide: true,
     centerPadding: '0px',
     arrows: true,
     nextArrow: <NextArrow onClick={undefined} />,
@@ -53,24 +52,21 @@ const ActivityNew = () => {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 3,
-          centerPadding: '0px'
+          slidesToScroll: 3
         }
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
-          centerPadding: '20px'
+          slidesToScroll: 2
         }
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1,
-          centerPadding: '40px'
+          slidesToScroll: 1
         }
       }
     ]
@@ -79,16 +75,16 @@ const ActivityNew = () => {
   return (
     <div
       className='relative z-10 flex flex-col justify-center items-center 
-    h-full p-4 mx-auto pb-20'
+    h-full p-4 pt-12 mx-auto pb-20'
     >
       <span className='mb-8 text-center text-xl sm:text-2xl md:text-3xl font-bold text-blue-900'>
         CÁC HOẠT ĐỘNG ĐÁNG CHÚ Ý
       </span>
       <div className='flex flex-row justify-center items-center w-full sm:w-4/5 md:w-3/5 lg:w-3/5'>
         <Slider className='w-full' {...settings}>
-          {_.map(slides, (slide, index) => (
+          {_.map(data, (card, index) => (
             <div key={index} className='px-2'>
-              <ActivityCard CardImage={slide} />
+              <ActivityCard CardInfo={card} />
             </div>
           ))}
         </Slider>

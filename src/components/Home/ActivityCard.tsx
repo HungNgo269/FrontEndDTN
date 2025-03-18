@@ -20,7 +20,6 @@ const CardHeaderNoPadding = styled(CardHeader)(`
 `)
 
 const ActivityCard: React.FC<CardProps> = ({ CardInfo }) => {
-  const imageUrl = `http://localhost:8081/images/${CardInfo?.eventImage[0].imageUrl}`
   const navigate = useNavigate()
 
   return (
@@ -38,21 +37,13 @@ const ActivityCard: React.FC<CardProps> = ({ CardInfo }) => {
       >
         <CardMedia
           component='img'
-          image={imageUrl || null}
+          image={CardInfo?.eventImage[0]?.imageUrl || null}
           alt='Activity'
-          className='cursor-pointer'
           sx={{
             height: '45%',
             aspectRatio: '3/2',
             objectFit: 'cover'
           }}
-          onClick={() =>
-            navigate(`/activity/${CardInfo.id}`, {
-              state: {
-                id: CardInfo.id
-              }
-            })
-          }
         />
         <div className='flex justify-between flex-col h-[55%] '>
           <CardHeaderNoPadding

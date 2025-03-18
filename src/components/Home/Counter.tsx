@@ -16,7 +16,7 @@ const Counter: React.FC<Props> = ({ propName }) => {
         <CounterCard image={traditionalIcon} description='Hoạt động truyền thống' linkto='/user/activity-point' />
         <CounterCard image={academicIcon} description='Hoạt động học thuật' linkto='/user/activity-point' />
         <CounterCard image={lcdIcon} description='Hoạt động liên chi đoàn' linkto='/user/activity-point' />
-        <CounterCard image={otherIcon} description='Nộp minh chứng' linkto='/user/activity-point' />
+        <CounterCard image={otherIcon} description='Nộp minh chứng' linkto='/user/activity' />
       </div>
     </div>
   )

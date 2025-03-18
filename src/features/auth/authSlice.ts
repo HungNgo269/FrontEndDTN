@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { login } from './authActions'
-const accessToken = localStorage.getItem('accessToken') || null
 
 interface AuthState {
   loading: boolean
@@ -11,7 +10,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   loading: false,
-  accessToken,
+  accessToken: null,
   error: null,
   success: false
 }

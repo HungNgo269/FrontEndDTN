@@ -6,14 +6,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { login } from '~/features/auth/authActions'
 import { setUser } from '~/features/user/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import store, { AppDispatch, RootState } from '~/store/store'
+import { store, AppDispatch, RootState } from '~/store/store'
 interface LoginFormValues {
   username: string
   password: string
 }
 //TODO: add a spinner for loading and toast for every noti(utils)
 const LoginPage: React.FC = () => {
-  const { loading, error, success } = useSelector((state: RootState) => state.auth)
+  // const { loading, error, success } = useSelector((state: RootState) => state.auth)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const {
@@ -50,15 +50,12 @@ const LoginPage: React.FC = () => {
       console.log('error while login', error)
     }
   }
-  console.log('usset', store.getState().user)
   return (
     <div className='bg-white min-h-screen flex flex-col justify-center items-center p-4'>
       <div className='w-full max-w-md bg-white shadow-lg rounded-lg p-6'>
         <div className='mb-6'>
           <h1 className='font-inter text-center text-4xl font-bold text-blue-900'>Đăng nhập</h1>
-          <p className='text-gray-400 text-center mt-2 hidden md:block'>
-            Dành cho các đơn vị đăng tải hoạt động và bộ phận xét duyệt hoạt động phục vụ cộng đồng của sinh viên
-          </p>
+          <p className='text-gray-400 text-center mt-2 hidden md:block'>tentoiratladai123 </p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className='w-full'>

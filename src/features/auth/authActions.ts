@@ -19,7 +19,6 @@ export const login = createAsyncThunk<LoginResponse, LoginPayload, { rejectValue
         username,
         password
       })
-      localStorage.setItem('accessToken', response.data.accessToken)
       console.log('response', response.data)
       return response.data
     } catch (error: any) {

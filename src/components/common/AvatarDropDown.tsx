@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react'
 import Avatar from './AvatarComponent'
 import { Box, Popper, Typography, Fade, Stack } from '@mui/material'
-import { Link } from 'react-router-dom'
-import store from '~/store/store'
+import { Link, useNavigate } from 'react-router-dom'
+import { store } from '~/store/store'
 import { useDispatch } from 'react-redux'
 import { logout } from '~/features/auth/authSlice'
 
@@ -10,10 +10,11 @@ const AvatarDropdown = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const [open, setOpen] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const accesstoken = store.getState().auth.accessToken
+  const accessToken = store.getState().auth.accessToken
+
   const user = store.getState().user
-  console.log(accesstoken)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   // Open the Popper when mouse enters the Box
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
     if (timeoutRef.current) {
@@ -30,7 +31,10 @@ const AvatarDropdown = () => {
       setAnchorEl(null)
     }, 200)
   }
-
+  const handleLogout = () => {
+    dispatch(logout())
+    navigate('/')
+  }
   return (
     <div onMouseLeave={handleClose} className='h-16'>
       <Box
@@ -80,7 +84,7 @@ const AvatarDropdown = () => {
                 <Stack direction='row' spacing={2}>
                   <Avatar src='avatar.jpg' alt='User Avatar'></Avatar>
                   <Typography variant='h6' component='h2'>
-                    {user.fullname}
+                    {user?.fullname}
                   </Typography>
                 </Stack>
 
@@ -96,21 +100,21 @@ const AvatarDropdown = () => {
                 </Link>
                 <Link to={'/user/noti-setting'} onClick={handleClose}>
                   <Typography sx={{ mt: 2 }} className='text-blue-900'>
-                    Cài đặt thông báo{' '}
+                    Gửi minh chứng{' '}
                   </Typography>
                 </Link>
                 <Typography sx={{ mt: 2 }} onClick={handleClose} className='text-blue-900'>
-                  {!accesstoken ? (
+                  {!accessToken ? (
                     <Link to='/login'>Đăng nhập</Link>
                   ) : (
-                    <Link
+                    <button
+                      className='cursor-pointer'
                       onClick={() => {
-                        dispatch(logout())
+                        handleLogout()
                       }}
-                      to='/'
                     >
                       Đăng xuất
-                    </Link>
+                    </button>
                   )}
                 </Typography>
               </Box>

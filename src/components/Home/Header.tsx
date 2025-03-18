@@ -5,8 +5,8 @@ import smallLogo from '~/assets/images/svg/smallLogo.svg.png'
 import AvatarDropdown from '~/components/common/AvatarDropDown'
 import HeaderTabs from './HeaderTabs'
 import SearchBar from '../common/SearchBar'
-import store from '~/store/store'
-import { Button, Typography } from '@mui/material'
+import { store } from '~/store/store'
+import { Button } from '@mui/material'
 
 interface Props {
   title?: string
@@ -16,7 +16,7 @@ const Header: React.FC<Props> = ({ title = 'Main Article Title' }) => {
   const [logo, setLogo] = useState(bigLogo)
   const [isScrolled, setIsScrolled] = useState(false)
   const location = useLocation()
-  const accessToken = store.getState().auth.accessToken
+  const accessToken = store.getState()?.auth?.accessToken
   useEffect(() => {
     const handleResize = () => {
       setLogo(window.innerWidth <= 768 ? smallLogo : bigLogo)

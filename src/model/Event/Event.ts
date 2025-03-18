@@ -1,3 +1,4 @@
+import semester from '../semester/semester'
 import EventImage from './EventImage'
 
 export default interface Event {
@@ -8,7 +9,6 @@ export default interface Event {
   endDate: string
   registrationStartDate: string
   registrationEndDate: string
-  semester: string
   user_id: number
   score: number
   maxRegistrations: number
@@ -16,5 +16,6 @@ export default interface Event {
   location: string
   additionalInfo: string
   eventType: string
+  semester: semester[]
   eventImage: EventImage[]
 }

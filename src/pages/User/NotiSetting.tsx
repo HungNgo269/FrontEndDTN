@@ -1,5 +1,4 @@
 import React from 'react'
-import MainContent from '~/components/User/MainContent'
 import SideNav from '~/components/User/SideNav'
 
 interface HomeProps {
@@ -15,7 +14,6 @@ const NotiSetting: React.FC<HomeProps> = ({ propName }) => {
   sm:max-w-full md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto'
       >
         <SideNav />
-        <MainContent title='Cài đặt thông báo' />
       </div>
     </div>
   )
