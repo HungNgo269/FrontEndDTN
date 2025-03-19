@@ -7,15 +7,12 @@ interface Props {
 const Banner: React.FC<Props> = ({ propName }) => {
   return (
     <div className='relative h-screen text-white'>
-      {/* Background Image with Gradient Overlay */}
       <div className='absolute inset-0 z-0'>
         <img src={banner} alt='Banner' className='w-full h-full object-cover' />
         <div className='absolute inset-0 bg-[rgba(0,0,0,0.3)]'></div>
       </div>
 
-      {/* Content */}
       <div className='relative z-10 flex flex-col justify-center h-full px-4 md:px-16 lg:px-24 m-auto'>
-        {/* Banner Text */}
         <div className='w-full flex flex-col justify-center items-center '>
           <div className='max-w-2xl'>
             <h1 className='text-4xl md:text-6xl font-bold mb-8 text-center'>Phục vụ cộng đồng và sinh viên 5 tốt</h1>

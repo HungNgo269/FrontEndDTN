@@ -1,6 +1,7 @@
-interface EventCriteria {
-  id: number
-  description: string
-  name: string
+import EventCriLCD from './EventCriLcd'
+import EventCri from './EventCri'
+
+export interface EventCriteria {
+  eventCriLCD: EventCriLCD
+  eventCri: EventCri
 }
-export default EventCriteria

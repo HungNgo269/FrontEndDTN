@@ -23,7 +23,7 @@ const SideNav: React.FC<SideNavProps> = ({ propName }) => {
       </div>
       <SideTabs redirectPathname='/user/user-profile' title='Hồ sơ' />
       <SideTabs redirectPathname='/user/activity-point' title='Phục vụ cộng đồng' />
-      <SideTabs redirectPathname='/user/activity' title='Gửi minh chứng ' />
+      <SideTabs redirectPathname='/user/submit-activity' title='Gửi minh chứng ' />
     </div>
   )
 }

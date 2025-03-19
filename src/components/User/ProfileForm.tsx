@@ -82,13 +82,13 @@ const ProfileForm: React.FC = () => {
         />
         {errors.address && <p className='mt-1 text-sm text-red-600'>{errors.address.message}</p>}
       </div>
-      <button
+      {/* <button
         type='submit'
         className='w-fit bg-blue-900 hover:bg-blue-800 text-white
          font-bold py-2 px-4 rounded cursor-pointer mx-auto'
       >
         Xác nhận
-      </button>
+      </button> */}
     </form>
   )
 }

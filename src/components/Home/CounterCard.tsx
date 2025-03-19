@@ -1,20 +1,27 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 interface CounterCardProps {
   image: string
   description: string
-  linkto: string
 }
 
-const CounterCard: React.FC<CounterCardProps> = ({ image, description, linkto }) => {
+const CounterCard: React.FC<CounterCardProps> = ({ image, description }) => {
   return (
-    <Link to={linkto} className='flex items-center justify-center lg:justify-start cursor-pointer md:p-4'>
-      <img className='w-6 h-6 sm:w-8 sm:h-8 md:w-14 md:h-14 lg:w-20 lg:h-20' src={image} alt={description} />
+    <div className='flex items-center justify-center  cursor-pointer md:p-4'>
+      <img
+        className='w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-14 xl:h-14 2xl:w-18 2xl:h-18'
+        src={image}
+        alt={description}
+      />
       <div className='flex flex-col items-center ml-4'>
-        <span className='text-sm sm:text-base md:text-lg lg:text-xl font-bold text-blue-950'>{description}</span>
+        <span
+          className='text-sm sm:text-base md:text-lg lg:text-xl 
+        font-bold text-blue-950 line-clamp-2'
+        >
+          {description}
+        </span>
       </div>
-    </Link>
+    </div>
   )
 }
 

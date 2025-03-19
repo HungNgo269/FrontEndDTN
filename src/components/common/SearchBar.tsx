@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import SearchBarResults from './SearchBarResults'
+import EventApi from '~/api/EventApi'
 
 interface Props {
   isScrolled?: boolean
@@ -7,12 +9,37 @@ interface Props {
 
 const SearchBar: React.FC<Props> = ({ isScrolled }) => {
   const location = useLocation()
+  const [query, setQuery] = useState<string>('')
+  const [results, setResults] = useState<any[]>([])
+  const [isFocused, setIsFocused] = useState<boolean>(false)
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      if (query && !isNaN(Number(query))) {
+        const eventID = Number(query)
+        const result = await EventApi.getEvent(eventID)
+        if (result) {
+          setResults([result])
+        } else {
+          setResults([])
+        }
+      } else {
+        setResults([])
+      }
+    }
+
+    fetchResults()
+  }, [query])
+
   return (
-    <div className='relative  lg:block sm:hidden md:hidden'>
-      {/* seacrhbar */}
+    <div className='relative lg:block sm:hidden md:hidden'>
       <input
         type='text'
-        placeholder='Search...'
+        placeholder='Search by Event ID...'
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setTimeout(() => setIsFocused(false), 200)}
         className={`w-48 px-4 py-2 rounded-lg ${
           isScrolled || location.pathname !== '/'
             ? 'bg-gray-100 text-blue-900 placeholder-blue-900 border-gray-300'
@@ -37,6 +64,12 @@ const SearchBar: React.FC<Props> = ({ isScrolled }) => {
           />
         </svg>
       </button>
+
+      {isFocused && query && (
+        <div className='absolute top-full left-0 right-0 mt-2 z-10'>
+          <SearchBarResults results={results} />
+        </div>
+      )}
     </div>
   )
 }

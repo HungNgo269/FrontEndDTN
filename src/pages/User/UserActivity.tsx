@@ -1,43 +1,30 @@
-import React, { useState } from 'react'
-import Header from '~/components/User/Header'
-import Timeline from '~/components/User/TimeLine'
-import Sidebar from '~/components/User/SideBar'
+import React, { useEffect, useState } from 'react'
 import EvidenceList from '~/components/User/EvidenceList'
 import MainContent from '~/components/User/MainContent'
 import SideNav from '~/components/User/SideNav'
+import Evidence from '~/model/Evidence/Evidence'
+import EvidenceApi from '~/api/EvidenceApi'
 
 const UserActivity: React.FC = () => {
-  const [selectedType, setSelectedType] = useState('Thành tích đặc biệt')
+  const [evidenceData, setEvidenceData] = useState<Evidence[] | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
-  // Dữ liệu mẫu cho danh sách minh chứng
-  const evidenceData = [
-    {
-      id: 1,
-      studentId: 'B24D',
-      name: 'Văn Anh',
-      class: 'Lớp A',
-      source: 'Nguồn A',
-      status: 'approved',
-      type: 'Thành tích đặc biệt'
-    },
-    {
-      id: 2,
-      studentId: 'B24E',
-      name: 'Nguyễn Bình',
-      class: 'Lớp B',
-      source: 'Nguồn B',
-      status: 'pending',
-      type: 'Công tác cộng đồng xã hội'
+  useEffect(() => {
+    const getRegistedEvent = async () => {
+      setIsLoading(true)
+
+      try {
+        const result = await EvidenceApi.getMyEvidenceList()
+        setEvidenceData(result)
+        console.log(evidenceData)
+      } catch (error) {
+        console.error('Failed to fetch registered events:', error)
+      } finally {
+        setIsLoading(false)
+      }
     }
-    // Thêm dữ liệu mẫu khác nếu cần
-  ]
-
-  // Dữ liệu mẫu cho dòng thời gian
-  const timelineData = [
-    { timestamp: '09:00 21/10/2024', description: 'Cập nhật, duyệt minh chứng' },
-    { timestamp: '08:00 06/11/2024', description: 'Sinh viên đánh giá' }
-    // Thêm các mốc thời gian khác nếu cần
-  ]
+    getRegistedEvent()
+  }, [])
 
   return (
     <div className='min-h-screen flex flex-col m-0'>
@@ -52,9 +39,7 @@ const UserActivity: React.FC = () => {
           decs='Những minh chứng về những hoạt động mà
          bạn đã tham gia hay những thành tích bạn đạt được'
         >
-          <Timeline data={timelineData} />
-          <Sidebar selectedType={selectedType} setSelectedType={setSelectedType} />
-          <EvidenceList data={evidenceData.filter((item) => item.type === selectedType)} />
+          <EvidenceList data={evidenceData} />
         </MainContent>
       </div>
     </div>

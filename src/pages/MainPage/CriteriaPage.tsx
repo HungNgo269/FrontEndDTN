@@ -29,7 +29,7 @@ const CriteriaPage: React.FC<Props> = ({ propName }) => {
       <p className='text-center text-xl text-blue-900 mb-8'>
         Dưới đây là bộ tiêu chí 5 Tốt mà sinh viên cần đạt để tham gia các hoạt động của nhà trường.
       </p>
-      <div className='grid grid-cols-1 md:grid-cols-5  gap-4 lg:w-[1300px] mx-auto'>
+      <div className='grid grid-cols-1 md:grid-cols-5  gap-4 xl:w-[1300px] lg:w-[900px] md:w-fit mx-auto'>
         <div
           className='flex flex-col p-4 text-blue-900
      items-center justify-items-start'

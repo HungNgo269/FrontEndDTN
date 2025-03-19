@@ -81,7 +81,7 @@ const AvatarDropdown = () => {
           {({ TransitionProps }) => (
             <Fade {...TransitionProps} timeout={150}>
               <Box className='w-full bg-white shadow-2xl p-4 md:p-6 lg:p-8 rounded-2xl '>
-                <Stack direction='row' spacing={2}>
+                <Stack direction='row' alignItems='center' spacing={2}>
                   <Avatar src='avatar.jpg' alt='User Avatar'></Avatar>
                   <Typography variant='h6' component='h2'>
                     {user?.fullname}
@@ -98,7 +98,7 @@ const AvatarDropdown = () => {
                     Phục vụ cộng đồng
                   </Typography>
                 </Link>
-                <Link to={'/user/noti-setting'} onClick={handleClose}>
+                <Link to={'/user/submit-activity'} onClick={handleClose}>
                   <Typography sx={{ mt: 2 }} className='text-blue-900'>
                     Gửi minh chứng{' '}
                   </Typography>

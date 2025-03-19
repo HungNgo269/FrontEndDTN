@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Event from '~/model/Event/Event'
+import { CircularProgress } from '@mui/material'
 
 interface ActivityTableProps {
   events: Event[]

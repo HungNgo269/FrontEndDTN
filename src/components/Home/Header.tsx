@@ -57,7 +57,11 @@ const Header: React.FC<Props> = ({ title = 'Main Article Title' }) => {
 
           <div className='hidden md:flex items-center justify-center space-x-8 w-1/2 gap-6 h-full'>
             <HeaderTabs isScrolled={isScrolled} redirectPathname='/' title='Giới thiệu' />
-            <HeaderTabs isScrolled={isScrolled} redirectPathname='/activities' title='Hoạt động' />
+            <HeaderTabs
+              isScrolled={isScrolled}
+              redirectPathname='/activities?eventTypeId=1&page=0&limit=10'
+              title='Hoạt động'
+            />
           </div>
 
           <div className='flex items-center space-x-4 justify-end w-1/4'>

@@ -1,4 +1,5 @@
 import semester from '../semester/semester'
+import { EventCriteria } from './EventCriteria'
 import EventImage from './EventImage'
 
 export default interface Event {
@@ -18,4 +19,5 @@ export default interface Event {
   eventType: string
   semester: semester[]
   eventImage: EventImage[]
+  eventCriteria: EventCriteria[]
 }

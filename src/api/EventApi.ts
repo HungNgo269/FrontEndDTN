@@ -3,7 +3,7 @@ import ClientApi from './ClientApi'
 const EventApi = {
   getEvents: async (page: number, limit: number) => {
     try {
-      const response = await ClientApi.get(`/events?page=${page}&limit=${limit}`)
+      const response = await ClientApi.get(`/events/all?page=${page}&limit=${limit}`)
       if (response.status === 200) {
         return response.data
       }
@@ -13,7 +13,7 @@ const EventApi = {
   },
   getEvent: async (eventID: number) => {
     try {
-      const response = await ClientApi.get(`/events/${eventID}`)
+      const response = await ClientApi.get(`/events/all/${eventID}`)
       if (response.status === 200) {
         return response.data
       }
@@ -39,6 +39,23 @@ const EventApi = {
       }
     } catch (error) {
       console.log('error while registerEvent events', error)
+    }
+  },
+  getEventByType: async (eventType: number, page: number, limit: number) => {
+    try {
+      const response = await ClientApi.get('/events/all/events-by-type', {
+        params: {
+          eventTypeId: eventType,
+          page,
+          limit
+        }
+      })
+      console.log(response)
+      if (response.status === 200) {
+        return response.data
+      }
+    } catch (error) {
+      console.log('error while getEventByType events', error)
     }
   }
 }

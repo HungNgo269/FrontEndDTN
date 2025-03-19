@@ -10,8 +10,17 @@ const UserApi = {
       console.log('error while get getRegistedEvents', error)
     }
   },
-  //http://localhost:8080/api/v1/registrations/attended/2?semesterId=1
-  getAttendedEvents: async (userid, semesterId) => {
+  RemoveRegistedEvents: async (eventID: string) => {
+    try {
+      const response = await ClientApi.delete(`/registrations/${eventID}`)
+      if (response.status === 200) {
+        return response.data
+      }
+    } catch (error) {
+      console.log('error while get getRegistedEvents', error)
+    }
+  },
+  getAttendedEvents: async (userid: number, semesterId: number) => {
     try {
       const response = await ClientApi.get(`/registrations/attended/${userid}`, {
         params: { semesterId }
