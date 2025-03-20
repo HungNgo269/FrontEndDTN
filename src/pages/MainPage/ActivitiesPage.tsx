@@ -57,7 +57,9 @@ const ActivitiesPage: React.FC = () => {
   return (
     <div
       className='relative z-10 flex flex-col justify-center items-center
-     h-full px-4 md:px-16 lg:px-24 lg:mb-10 md:mb-6 sm:mb-10 pt-20'
+       h-full px-4 md:px-16 lg:px-24 lg:mb-10 md:mb-6 sm:mb-10 pt-20 2xl:max-w-[1500px] 
+       xl:max-w-[1200px] 
+       mx-auto'
     >
       <h1 className='text-2xl font-bold my-4'>Danh sách Hoạt động</h1>
       <ActivityTabsNavigation />

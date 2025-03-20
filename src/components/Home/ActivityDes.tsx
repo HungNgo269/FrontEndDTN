@@ -108,9 +108,9 @@ const ActivityDes: React.FC<ActivityDesProps> = ({ propName }) => {
           <CircularProgress sx={{ display: 'block' }} />
         </div>
       ) : (
-        <div className='flex flex-col md:flex-row w-full max-w-[1200px] gap-8'>
+        <div className='flex flex-col md:flex-row w-full max-w-[1200px] gap-8 '>
           {/* Article Section */}
-          <div className='flex flex-col w-full max-w-[800px]'>
+          <div className='flex flex-col w-full max-w-[800px] '>
             <div className='flex flex-row justify-between pb-8 w-full'>
               <Link to={`http://localhost:3000/activities?eventTypeId=${eventTypeId}&page=0&limit=10`}>
                 <Typography variant='h6' sx={{ color: '#1c398e' }}>
@@ -140,78 +140,80 @@ const ActivityDes: React.FC<ActivityDesProps> = ({ propName }) => {
             </div>
           </div>
           {/* Side Information Section */}
-          {accessToken && (
-            <div className='flex flex-col w-full max-w-[330px] gap-4 sticky top-20'>
-              <Typography variant='body2'>
-                Đã đăng ký: {eventData.currentRegistrations} / {eventData.maxRegistrations}
-              </Typography>
-              <Stack sx={{ width: '100%' }}>
-                <BorderLinearProgress
-                  variant='determinate'
-                  value={percentage}
-                  sx={{ '& .MuiLinearProgress-bar': { backgroundColor: '#1c398e' } }}
-                />
-              </Stack>
-              <div className='flex flex-col gap-2'>
-                <div>
-                  <span className='font-bold'>Địa điểm:</span> {eventData.location}
+          <div className=''>
+            {accessToken && (
+              <div className='flex flex-col w-full max-w-[330px] gap-4  top-20 sticky'>
+                <Typography variant='body2'>
+                  Đã đăng ký: {eventData.currentRegistrations} / {eventData.maxRegistrations}
+                </Typography>
+                <Stack sx={{ width: '100%' }}>
+                  <BorderLinearProgress
+                    variant='determinate'
+                    value={percentage}
+                    sx={{ '& .MuiLinearProgress-bar': { backgroundColor: '#1c398e' } }}
+                  />
+                </Stack>
+                <div className='flex flex-col gap-2'>
+                  <div>
+                    <span className='font-bold'>Địa điểm:</span> {eventData.location}
+                  </div>
+                  <div>
+                    <span className='font-bold'>Điểm phục vụ cộng đồng:</span> {eventData.score} điểm
+                  </div>
+                  <ol>
+                    <span className='font-bold'>Các tiêu chí của sự kiện: </span>
+                    {eventData?.eventCriteria?.eventCriteria?.map((criteria, index) => (
+                      <li key={index}>
+                        <span> - {criteria.name} </span>
+                      </li>
+                    ))}
+                  </ol>
+                  <div>
+                    <span className='font-bold'>Ngày kết thúc đăng ký:</span>{' '}
+                    {moment(eventData.registrationEndDate).format('DD/MM/YYYY')}
+                  </div>
+                  <div>
+                    <span className='font-bold'>Hoạt động diễn ra từ ngày:</span>{' '}
+                    {moment(eventData.date).format('DD/MM/YYYY')} đến ngày{' '}
+                    {moment(eventData.endDate).format('DD/MM/YYYY')}
+                  </div>
                 </div>
                 <div>
-                  <span className='font-bold'>Điểm phục vụ cộng đồng:</span> {eventData.score} điểm
-                </div>
-                <ol>
-                  <span className='font-bold'>Các tiêu chí của sự kiện: </span>
-                  {eventData?.eventCriteria?.eventCriteria?.map((criteria, index) => (
-                    <li key={index}>
-                      <span> - {criteria.name} </span>
-                    </li>
-                  ))}
-                </ol>
-                <div>
-                  <span className='font-bold'>Ngày kết thúc đăng ký:</span>{' '}
-                  {moment(eventData.registrationEndDate).format('DD/MM/YYYY')}
-                </div>
-                <div>
-                  <span className='font-bold'>Hoạt động diễn ra từ ngày:</span>{' '}
-                  {moment(eventData.date).format('DD/MM/YYYY')} đến ngày{' '}
-                  {moment(eventData.endDate).format('DD/MM/YYYY')}
+                  {checkRegister ? (
+                    <Button
+                      variant='outlined'
+                      sx={{
+                        backgroundColor: '#1c398e',
+                        borderRadius: '8px',
+                        '&:hover': { backgroundColor: '#0a67af' }
+                      }}
+                      size='small'
+                      onClick={handleUnregister}
+                    >
+                      <span className='font-bold text-white text-center p-0.5'>Hủy đăng ký</span>
+                    </Button>
+                  ) : (
+                    <Button
+                      variant='outlined'
+                      sx={{
+                        backgroundColor: '#1c398e',
+                        borderRadius: '8px',
+                        '&:hover': { backgroundColor: '#0a67af' }
+                      }}
+                      size='small'
+                      disabled={
+                        moment().isAfter(eventData.registrationEndDate) ||
+                        eventData.currentRegistrations >= eventData.maxRegistrations
+                      }
+                      onClick={handleRegister}
+                    >
+                      <span className='font-bold text-white text-center p-0.5'>Đăng ký</span>
+                    </Button>
+                  )}
                 </div>
               </div>
-              <div>
-                {checkRegister ? (
-                  <Button
-                    variant='outlined'
-                    sx={{
-                      backgroundColor: '#1c398e',
-                      borderRadius: '8px',
-                      '&:hover': { backgroundColor: '#0a67af' }
-                    }}
-                    size='small'
-                    onClick={handleUnregister}
-                  >
-                    <span className='font-bold text-white text-center p-0.5'>Hủy đăng ký</span>
-                  </Button>
-                ) : (
-                  <Button
-                    variant='outlined'
-                    sx={{
-                      backgroundColor: '#1c398e',
-                      borderRadius: '8px',
-                      '&:hover': { backgroundColor: '#0a67af' }
-                    }}
-                    size='small'
-                    disabled={
-                      moment().isAfter(eventData.registrationEndDate) ||
-                      eventData.currentRegistrations >= eventData.maxRegistrations
-                    }
-                    onClick={handleRegister}
-                  >
-                    <span className='font-bold text-white text-center p-0.5'>Đăng ký</span>
-                  </Button>
-                )}
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
     </div>

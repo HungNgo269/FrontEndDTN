@@ -74,7 +74,7 @@ const EvidenceList: React.FC<EvidenceListProps> = ({ data }) => {
       <div className='flex justify-between items-center mb-4'>
         <h2 className='text-lg font-bold'>Danh sách minh chứng</h2>
         <div>
-          <button onClick={handleOpen} className='bg-red-500 text-white px-4 py-2 rounded mr-2'>
+          <button onClick={handleOpen} className='bg-[#4F959D] text-white px-4 py-2 rounded mr-2'>
             Thêm mới
           </button>
         </div>

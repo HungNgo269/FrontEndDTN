@@ -31,6 +31,16 @@ const UserApi = {
     } catch (error) {
       console.log('error while get getAttendedEvents', error)
     }
+  },
+  checkFiveGood: async (userid: number) => {
+    try {
+      const response = await ClientApi.get(`/student_criteria/check/${userid}`)
+      if (response.status === 200) {
+        return response.data
+      }
+    } catch (error) {
+      console.log('error while get getAttendedEvents', error)
+    }
   }
 }
 export default UserApi
