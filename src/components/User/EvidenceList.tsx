@@ -7,11 +7,15 @@ import {
   DialogActions,
   TextField,
   Button,
-  CircularProgress
+  CircularProgress,
+  ThemeProvider,
+  createTheme
 } from '@mui/material'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import Evidence from '~/model/Evidence/Evidence'
 import EvidenceApi from '~/api/EvidenceApi'
-
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 interface EvidenceListProps {
   data: Evidence[]
 }
@@ -27,12 +31,10 @@ const EvidenceList: React.FC<EvidenceListProps> = ({ data }) => {
   }
 
   const [open, setOpen] = useState(false)
-
   const [isLoading, setIsLoading] = useState(false)
-
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const [date, setDate] = useState('')
+  const [date, setDate] = useState<Date | null>(null)
   const [proofUrl, setProofUrl] = useState('')
   const [points, setPoints] = useState('')
   const [semesterId, setSemesterId] = useState('')
@@ -42,10 +44,11 @@ const EvidenceList: React.FC<EvidenceListProps> = ({ data }) => {
 
   const handleSubmit = async () => {
     setIsLoading(true)
+    const dateString = date ? date.toISOString().split('T')[0] : ''
     const payload = {
       name,
       description,
-      date,
+      date: dateString,
       proof_url: proofUrl,
       points: Number(points),
       semester_id: Number(semesterId)
@@ -54,10 +57,9 @@ const EvidenceList: React.FC<EvidenceListProps> = ({ data }) => {
     try {
       const response = await EvidenceApi.SubmitMyEvent(payload)
       console.log('Submit success:', response)
-      // Reset form sau khi submit
       setName('')
       setDescription('')
-      setDate('')
+      setDate(null)
       setProofUrl('')
       setPoints('')
       setSemesterId('')
@@ -69,14 +71,22 @@ const EvidenceList: React.FC<EvidenceListProps> = ({ data }) => {
     }
   }
 
+  const customTheme = createTheme({
+    palette: {
+      primary: {
+        main: '#1e3a8a'
+      }
+    }
+  })
+
   return (
-    <div className='w-3/4 p-4'>
+    <div className='w-full'>
       <div className='flex justify-between items-center mb-4'>
         <h2 className='text-lg font-bold'>Danh sách minh chứng</h2>
         <div>
-          <button onClick={handleOpen} className='bg-[#4F959D] text-white px-4 py-2 rounded mr-2'>
+          <Button onClick={handleOpen} variant='contained'>
             Thêm mới
-          </button>
+          </Button>
         </div>
       </div>
       {isLoading ? (
@@ -85,14 +95,14 @@ const EvidenceList: React.FC<EvidenceListProps> = ({ data }) => {
         </div>
       ) : (
         <>
-          <table className='w-full border-collapse'>
+          <table className='w-full border-collapse border-blue-950'>
             <thead>
-              <tr className='bg-gray-200'>
-                <th className='border p-2'>TT</th>
-                <th className='border p-2'>Thời điểm</th>
-                <th className='border p-2'>Số điểm</th>
-                <th className='border p-2'>Nguồn khai báo</th>
-                <th className='border p-2'>Trạng thái</th>
+              <tr className='bg-blue-900 text-white border-blue-950'>
+                <th className='border p-2 border-blue-950'>TT</th>
+                <th className='border p-2 border-blue-950'>Thời điểm</th>
+                <th className='border p-2 border-blue-950'>Số điểm</th>
+                <th className='border p-2 border-blue-950'>Nguồn khai báo</th>
+                <th className='border p-2 border-blue-950'>Trạng thái</th>
               </tr>
             </thead>
             <tbody>
@@ -143,8 +153,7 @@ const EvidenceList: React.FC<EvidenceListProps> = ({ data }) => {
             </tbody>
           </table>
           {data?.length > itemsPerPage && (
-            <div className='mt-4 flex justify-between items-center'>
-              <span>Tổng số: {data.length}</span>
+            <div className='mt-4 flex flex-row justify-end'>
               <Pagination
                 count={totalPages}
                 page={currentPage}
@@ -157,63 +166,60 @@ const EvidenceList: React.FC<EvidenceListProps> = ({ data }) => {
         </>
       )}
 
-      {/* Modal dialog */}
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Thêm Minh Chứng Mới</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin='dense'
-            label='Tên minh chứng'
-            fullWidth
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextField
-            margin='dense'
-            label='Mô tả'
-            fullWidth
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <TextField
-            margin='dense'
-            label='Ngày (yyyy-mm-dd)'
-            fullWidth
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-          <TextField
-            margin='dense'
-            label='Link chứng từ'
-            fullWidth
-            value={proofUrl}
-            onChange={(e) => setProofUrl(e.target.value)}
-          />
-          <TextField
-            margin='dense'
-            label='Số điểm'
-            fullWidth
-            value={points}
-            onChange={(e) => setPoints(e.target.value)}
-          />
-          <TextField
-            margin='dense'
-            label='ID Kỳ học'
-            fullWidth
-            value={semesterId}
-            onChange={(e) => setSemesterId(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color='secondary'>
-            Hủy
-          </Button>
-          <Button onClick={handleSubmit} color='primary' variant='contained'>
-            Submit
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <ThemeProvider theme={customTheme}>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle sx={{ backgroundColor: '#1e3a8a', color: 'white' }}>Thêm Minh Chứng Mới</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin='dense'
+              label='Tên minh chứng'
+              fullWidth
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <TextField
+              margin='dense'
+              label='Mô tả'
+              fullWidth
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker label='Ngày' value={date} onChange={(newValue) => setDate(newValue)} format='yyyy-MM-dd' />
+            </LocalizationProvider>
+            <TextField
+              margin='dense'
+              label='Link chứng từ'
+              fullWidth
+              value={proofUrl}
+              onChange={(e) => setProofUrl(e.target.value)}
+            />
+            <TextField
+              margin='dense'
+              label='Số điểm'
+              fullWidth
+              value={points}
+              onChange={(e) => setPoints(e.target.value)}
+            />
+            <TextField
+              margin='dense'
+              label='ID Kỳ học'
+              fullWidth
+              value={semesterId}
+              onChange={(e) => setSemesterId(e.target.value)}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color='primary' variant='outlined'>
+              Hủy
+            </Button>
+            <Button onClick={handleSubmit} color='primary' variant='contained'>
+              Submit
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
     </div>
   )
 }

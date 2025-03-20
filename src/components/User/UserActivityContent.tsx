@@ -8,7 +8,7 @@ interface MainContentProps {
 
 const UserActivityContent: React.FC<MainContentProps> = ({ events }) => {
   return (
-    <div className='flex-1 '>
+    <div className='flex-1 w-full'>
       <ActivityTable events={events} />
     </div>
   )

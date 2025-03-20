@@ -36,17 +36,21 @@ const ActivityDes: React.FC<ActivityDesProps> = ({ propName }) => {
   const [eventData, setEventData] = useState<Event | null>(null)
   const [registed, setRegisted] = useState<Event[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  console.log('check')
+  const fetchEventData = async () => {
+    try {
+      const [eventResult] = await EventApi.getEvent(`${id}`)
+      setEventData(eventResult)
+    } catch (error) {
+      console.error('Error fetching event data:', error)
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
       try {
-        const [eventResult, registedResult] = await Promise.all([
-          EventApi.getEvent(`${id}`),
-          UserApi.getRegistedEvents()
-        ])
-        setEventData(eventResult)
-        setRegisted(registedResult || []) // fallback to empty array if registedResult is undefined
+        await fetchEventData()
       } catch (error) {
         console.error('Error fetching data:', error)
       } finally {
@@ -63,9 +67,8 @@ const ActivityDes: React.FC<ActivityDesProps> = ({ propName }) => {
 
   const handleRegister = async () => {
     try {
-      await EventApi.registerEvent(`${id}`)
-      const updatedRegisted = await UserApi.getRegistedEvents()
-      setRegisted(updatedRegisted || [])
+      const updatedRegisted = await EventApi.registerEvent(`${id}`)
+      setRegisted(updatedRegisted)
     } catch (error) {
       console.error('Failed to register event:', error)
     }
@@ -74,6 +77,7 @@ const ActivityDes: React.FC<ActivityDesProps> = ({ propName }) => {
   const handleUnregister = async () => {
     try {
       await UserApi.RemoveRegistedEvents(`${eventData?.id}`)
+      await fetchEventData()
       const updatedRegisted = await UserApi.getRegistedEvents()
       setRegisted(updatedRegisted || [])
     } catch (error) {
@@ -99,7 +103,7 @@ const ActivityDes: React.FC<ActivityDesProps> = ({ propName }) => {
         ? 1
         : eventData.eventType === 'Hoạt động học thuật'
           ? 2
-          : 1
+          : 10
 
   return (
     <div className='relative z-10 flex flex-col justify-items-start h-full min-h-screen items-center px-4 md:px-16 lg:px-24 m-auto py-20 bg-[#fbfaf6]'>
@@ -109,7 +113,6 @@ const ActivityDes: React.FC<ActivityDesProps> = ({ propName }) => {
         </div>
       ) : (
         <div className='flex flex-col md:flex-row w-full max-w-[1200px] gap-8 '>
-          {/* Article Section */}
           <div className='flex flex-col w-full max-w-[800px] '>
             <div className='flex flex-row justify-between pb-8 w-full'>
               <Link to={`http://localhost:3000/activities?eventTypeId=${eventTypeId}&page=0&limit=10`}>
@@ -139,7 +142,6 @@ const ActivityDes: React.FC<ActivityDesProps> = ({ propName }) => {
               </div>
             </div>
           </div>
-          {/* Side Information Section */}
           <div className=''>
             {accessToken && (
               <div className='flex flex-col w-full max-w-[330px] gap-4  top-20 sticky'>
